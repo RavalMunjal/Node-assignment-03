@@ -123,11 +123,11 @@ const replaceNote = async (req, res) => {
       });
     }
 
-    const note = await Note.findByIdAndReplace(id, req.body, {
-      new: true,
-      overwrite: true,
-      runValidators: true,
-    });
+    const note = await Note.findOneAndReplace(
+      { _id: id },
+      req.body,
+      { new: true, runValidators: true }
+    );
 
     if (!note) {
       return res.status(404).json({
